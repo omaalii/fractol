@@ -16,10 +16,10 @@
 # include <stdio.h>// For Debugging
 # include <stdlib.h>//malloc free
 # include <unistd.h>//write
-# include "minilibx-mac"
+# include "mlx/mlx.h"
 # include "fractol.h"
 
-#define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\"./fractol julia <value_1> <value_2>\"
+#define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
 /*we use a square
 to make the rendering math easier*/
 #define WIDTH 800
@@ -45,11 +45,19 @@ to make the rendering math easier*/
 #define PSYCHEDELIC_CORAL      0xFF7F50
 #define PSYCHEDELIC_SPRING     0x00FF7F
 
-
+//KEYS
+# define KEY_ESC 53
+# define KEY_UP 126
+# define KEY_DOWN 125
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_SPACE 49
+# define KEY_PLUS 24
+# define KEY_MINUS 27
 /*
  COMPLEX values
  */
-typdef struct s_complex
+typedef struct s_complex
 {
     //      real
     double  x;
@@ -85,6 +93,9 @@ typedef struct  s_fractal
     //Hooks member variable
     double  escape_value;//hypotenuse
     int     iterations;//tied to the image quality
+    double  shift_x;
+    double  shift_y;
+    double  zoom;
 }				t_fractal;                    
 
 // ***** String Utils *****
@@ -93,9 +104,22 @@ void	put_str_fd(char *s, int fd);
 
 //***** init *****
 void    fractal_init(t_fractal *fractal);
+void	events_init(t_fractal *fractal);
+
+//***** render *****
+void	fractal_render(t_fractal *fractal);
+
+//***** hooks *****
+int key_handler(int keysym, t_fractal *fractal);
+int	close_handler(t_fractal *fractal);
+
+//***** events *****
+int	close_handler(t_fractal *fractal);
+int	key_handler(int keysym, t_fractal *fractal);
+int	mouse_handler(int button, int x, int y, t_fractal *fractal);
 
 //***** math utils *****
-double  map(double unscaled_num, double new_min, double new_max, double old_min, double old_max);
+double  map(double unscaled_num, double new_min, double new_max, double old_max);
 t_complex   complex_sum(t_complex z1, t_complex z2);
 t_complex   complex_square(t_complex z);
 

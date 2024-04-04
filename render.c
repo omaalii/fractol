@@ -33,12 +33,12 @@ static void my_pixel_put(int x, int y, t_img *img, int colour)
             z initially is (0, 0)
             c is the actaul point we want to check
 */
-void    handle_pixel(int x, int y, t_fractal *fractal)
+static void    handle_pixel(int x, int y, t_fractal *fractal)
 {
-    t_complex   z;
-    t_complex   c;
-    int         i;
-    int         colour;
+    t_complex	z;
+    t_complex	c;
+    int			i;
+    int			colour;
     
     i = 0;
     //1st iteration
@@ -46,21 +46,45 @@ void    handle_pixel(int x, int y, t_fractal *fractal)
     z.y = 0.0;
 
     //pixel co-ordinated scaled to fit mandelbrot
-    c.x = map(x, -2, 2, 0, WIDTH);
-    c.y = map(y, 2, -2, 0, HEIGHT);
+    c.x = (map(x, -2, 2, WIDTH) * fractal->zoom) + fractal->shift_x;
+    c.y = (map(y, 2, -2, HEIGHT) * fractal->zoom) + fractal->shift_y;
     //How many times we want to iterate
     //to check if the point escaped
-    while(i < fractal->iterations)
-    {
-        //apply actual z^2 + c
-        z = complex_sum(complex_square(z), c);//TODO
+    while (i < fractal->iterations)
+	{
+		//apply actual z^2 + c
+		z = complex_sum(complex_square(z), c);
 
-        //Has the values escaped??
-        if((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
-        {
-            colour = map(i, BLACK, WHITE, 0, fractal->iterations);
-            my_pixel_put();//TODO
-            return ;
-        }
-    }
+		//Has the values escaped??
+		if((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
+		{
+			colour = map(i, BLACK, WHITE, fractal->iterations);
+			my_pixel_put(x, y, &fractal->img, colour);
+			return ;
+		}
+		i++;
+	}
+	my_pixel_put(x, y, &fractal->img, PSYCHEDELIC_CYAN_BLUE);
+}
+
+void	fractal_render(t_fractal *fractal)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while(x < WIDTH)
+		{
+			handle_pixel(x, y, fractal);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(fractal->mlx_connection,
+							fractal->mlx_window,
+							fractal->img.img_ptr,
+							0, 0);
 }
