@@ -32,6 +32,11 @@ static void my_pixel_put(int x, int y, t_img *img, int colour)
             z = z^2 + c
             z initially is (0, 0)
             c is the actaul point we want to check
+
+			JULIA
+			./fractol julia <real> <i>
+			z = pixel_point + constant
+			requires converting strings to doubles
 */
 static void    handle_pixel(int x, int y, t_fractal *fractal)
 {

@@ -84,7 +84,7 @@ typedef struct  s_img
 
 typedef struct  s_fractal 
 {
-    char    *name;
+    char    *name;//Mandelbrot or Julia
     //MLX
     void    *mlx_connection;// mlx_init()
     void    *mlx_window;// mlx_new_window()
@@ -101,6 +101,7 @@ typedef struct  s_fractal
 // ***** String Utils *****
 int		ft_strncmp(char *s1, char *s2, int n);
 void	put_str_fd(char *s, int fd);
+double  atod(char *s);
 
 //***** init *****
 void    fractal_init(t_fractal *fractal);

@@ -36,3 +36,31 @@ void put_str_fd(char *s, int fd)
         i++;
     }
 }
+
+double  atod(char *s)
+{
+    int		integer_part;
+    double	fractional_part;
+    double	power;
+    int		sign;
+
+	integer_part = 0;
+	fractional_part = 0.0;
+	power = 1;
+    sign = 1;
+	while ((*s >= 9 && *s <= 13) || *s == ' ')
+		s++;
+	while (*s == '+' || *s == '-')
+		if (*s++ == '-')
+			sign = -sign;
+	while (*s && *s != '.')
+		integer_part = (integer_part * 10) + *s++ - '0';
+	if (*s == '.')
+		s++;
+	while (*s)
+	{
+		power /= 10;
+		fractional_part = fractional_part  + (*s - '0') * power;
+	}
+	return ((integer_part + fractional_part) * sign);
+}
