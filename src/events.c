@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
+#include "../mlx/mlx.h"
 
 //In case of ESC or pressing x in the window
 int	close_handler(t_fractal *fractal)
@@ -47,10 +48,13 @@ int	key_handler(int keysym, t_fractal *fractal)
 
 int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 {
+	x = 0;
+	y = 0;
 	if (button == 5)//Zooming IN
 		fractal->zoom *= 0.90;
 	else if (button == 4)//Zooming OUT
 		fractal->zoom *= 1.1;
+	mlx_clear_window(fractal->mlx_connection, fractal->mlx_window);
 	//refresh
 	fractal_render(fractal);
 	return (0);

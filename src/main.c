@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
+#include "../mlx/mlx.h"
 
 /*Mandelbrot and Julia
  Infinite Zoom
@@ -26,10 +27,15 @@ int main(int argc, char **argv)
 {
 	t_fractal	fractal;
 
-    if (argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 10)
-    || argc == 4 && !ft_strncmp(argv[1], "julia", 5))
+    if ((argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 10))
+    || (argc == 4 && !ft_strncmp(argv[1], "julia", 5)))
 	{
 		fractal.name = argv[1];
+		if (!ft_strncmp(fractal.name, "julia", 5))
+		{
+			fractal.julia_x = atod(argv[2]);
+			fractal.julia_y = atod(argv[3]);
+		}
 		//Start Prompt
 		fractal_init(&fractal);
 		fractal_render(&fractal);

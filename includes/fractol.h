@@ -16,7 +16,7 @@
 # include <stdio.h>// For Debugging
 # include <stdlib.h>//malloc free
 # include <unistd.h>//write
-# include "mlx/mlx.h"
+# include "../mlx/mlx.h"
 # include "fractol.h"
 
 #define ERROR_MESSAGE "Please enter \n\t\"./fractol mandelbrot\" or \n\t\"./fractol julia <value_1> <value_2>\"\n"
@@ -96,6 +96,8 @@ typedef struct  s_fractal
     double  shift_x;
     double  shift_y;
     double  zoom;
+    double julia_x;
+    double julia_y;
 }				t_fractal;                    
 
 // ***** String Utils *****

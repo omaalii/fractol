@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
+#include "../mlx/mlx.h"
 
 //Resize the image
 double  map(double unscaled_num, double new_min, double new_max, double old_max)

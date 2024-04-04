@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
+#include "../mlx/mlx.h"
 
 int ft_strncmp(char *s1, char *s2, int n)
 {
@@ -28,11 +29,13 @@ int ft_strncmp(char *s1, char *s2, int n)
 void put_str_fd(char *s, int fd)
 {
     int i;
+
+    i = 0;
     if (s == NULL || fd < 0)
         return ;
     while (s[i] != '\0')
     {
-        write(1, s, 1);
+        write(1, &s[i], 1);
         i++;
     }
 }

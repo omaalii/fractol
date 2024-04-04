@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol.h"
+#include "../includes/fractol.h"
+#include "../mlx/mlx.h"
 
 static void	malloc_error(void)
 {
