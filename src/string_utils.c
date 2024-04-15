@@ -69,47 +69,57 @@ double  atod(char *s)
 	return ((integer_part + fractional_part) * sign);
 }
 
-int	check_more(char *s)
+int	is_digit(char c)
 {
-	int	i;
-	int	dot_count;
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
 
-	i = 0;
-	dot_count = 0;
-	if (s[0] == '+' || s[0] == '-')
-			i++;
-	while (s[i])
-	{
-		if (s[i] >= '0' && s[i] <= '9')
-			i++;
-		else if (s[i] == '.')
-		{
-			if (dot_count == 1)
-				return (0);
-			dot_count++;
-			i++;
-		}
-		else
-			return (0);
-		i++;
-	}
+int	valid_decimal(char *s)
+{
+	if (*s == '-' || *s == '+')
+		s++;
+	if (!is_digit(*s))
+		return (0);
+	while (is_digit(*s))
+		s++;
+	if (*s != '.' && *s != '\0')
+		return (0);
+	if (*s == '\0')
+		return (1);
+	s++;
+	if (*s == '\0')// if the string ends with '.'
+		return (0);
+	while (is_digit(*s))
+		s++;
+	return (*s == '\0');
+}
+
+int	check_args(char **argv, t_fractal *fractal)
+{
+	if (!valid_decimal(argv[2]) || !valid_decimal(argv[3]))
+		return (0);
+	fractal->julia_x = atod(argv[2]);
+	fractal->julia_y = atod(argv[3]);
+	if (fractal->julia_x < -2.0 || fractal->julia_x > 2.0
+		|| fractal->julia_y < -2.0 || fractal->julia_y > 2.0)
+		return (0);
 	return (1);
 }
 
-int check_error(char *arg)
+int check_error(int argc, char **argv, t_fractal *fractal)
 {
-   int	i;
-   int	j;
-   char	*scope;
-
-   i = 0;
-   j = 0;
-   scope = "+-.123456789";
-   while (scope[i])
-   {
-		if (!check_more(arg))
+	if (argc >= 2)
+	{
+		if (argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 10))
+			return (1);
+		if (!ft_strncmp(argv[1], "julia", 5))
+		{
+			if (argc == 4 && check_args(argv, fractal) == 1)
+				return (1);
 			return (0);
-		i++;
-   }
-   return (1);
+		}
+	}
+	return (0);
 }

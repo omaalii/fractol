@@ -104,8 +104,10 @@ typedef struct  s_fractal
 int		ft_strncmp(char *s1, char *s2, int n);
 void	put_str_fd(char *s, int fd);
 double  atod(char *s);
-int check_error(char *arg);
-int	check_more(char *s);
+int check_error(int argc, char **argv, t_fractal *fractal);
+int	check_args(char **argv, t_fractal *fractal);
+int	valid_decimal(char *s);
+int	is_digit(char c);
 
 //***** init *****
 void    fractal_init(t_fractal *fractal);
