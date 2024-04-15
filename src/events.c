@@ -21,7 +21,6 @@ int	close_handler(t_fractal *fractal)
 	mlx_clear_window(fractal->mlx_connection,
 						fractal->mlx_window);
 	mlx_destroy_window(fractal->mlx_connection, fractal->mlx_window);
-	free(fractal->mlx_connection);
 	exit(0);
 }
 
@@ -48,8 +47,8 @@ int	key_handler(int keysym, t_fractal *fractal)
 
 int	mouse_handler(int button, int x, int y, t_fractal *fractal)
 {
-	x = 0;
-	y = 0;
+	(void)x;
+	(void)y;
 	if (button == 5)//Zooming IN
 		fractal->zoom *= 0.90;
 	else if (button == 4)//Zooming OUT

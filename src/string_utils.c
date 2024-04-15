@@ -42,7 +42,7 @@ void put_str_fd(char *s, int fd)
 
 double  atod(char *s)
 {
-    int		integer_part;
+    long	integer_part;
     double	fractional_part;
     double	power;
     int		sign;
@@ -64,6 +64,52 @@ double  atod(char *s)
 	{
 		power /= 10;
 		fractional_part = fractional_part  + (*s - '0') * power;
+		s++;
 	}
 	return ((integer_part + fractional_part) * sign);
+}
+
+int	check_more(char *s)
+{
+	int	i;
+	int	dot_count;
+
+	i = 0;
+	dot_count = 0;
+	if (s[0] == '+' || s[0] == '-')
+			i++;
+	while (s[i])
+	{
+		if (s[i] >= '0' && s[i] <= '9')
+			i++;
+		else if (s[i] == '.')
+		{
+			if (dot_count == 1)
+				return (0);
+			dot_count++;
+			i++;
+		}
+		else
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int check_error(char *arg)
+{
+   int	i;
+   int	j;
+   char	*scope;
+
+   i = 0;
+   j = 0;
+   scope = "+-.123456789";
+   while (scope[i])
+   {
+		if (!check_more(arg))
+			return (0);
+		i++;
+   }
+   return (1);
 }

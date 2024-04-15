@@ -34,16 +34,16 @@ to make the rendering math easier*/
 #define BLUE    0x0000FF
 
 //Psychedelic Colours
-#define PSYCHEDELIC_LIME       0xBFFF00
-#define PSYCHEDELIC_CYAN_BLUE  0x00FFFF
-#define PSYCHEDELIC_MAGENTA    0xFF00FF
-#define PSYCHEDELIC_VIOLET     0xEE82EE
-#define PSYCHEDELIC_TANGERINE  0xFFA500
-#define PSYCHEDELIC_INDIGO     0x4B0082
-#define PSYCHEDELIC_TURQUOISE  0x40E0D0
-#define PSYCHEDELIC_GOLD       0xFFD700
-#define PSYCHEDELIC_CORAL      0xFF7F50
-#define PSYCHEDELIC_SPRING     0x00FF7F
+// Psychedelic colors
+#define MAGENTA_BURST   0xFF00FF  // A vibrant magenta
+#define LIME_SHOCK      0xCCFF00  // A blinding lime
+#define NEON_ORANGE     0xFF6600  // A blazing neon orange
+#define PSYCHEDELIC_PURPLE 0x660066  // A deep purple
+#define AQUA_DREAM      0x33CCCC  // A bright turquoise
+#define HOT_PINK        0xFF66B2  // As the name suggests!
+#define ELECTRIC_BLUE   0x0066FF  // A radiant blue
+#define LAVA_RED        0xFF3300  // A bright, molten red
+
 
 //KEYS
 # define KEY_ESC 53
@@ -104,13 +104,15 @@ typedef struct  s_fractal
 int		ft_strncmp(char *s1, char *s2, int n);
 void	put_str_fd(char *s, int fd);
 double  atod(char *s);
+int check_error(char *arg);
+int	check_more(char *s);
 
 //***** init *****
 void    fractal_init(t_fractal *fractal);
 void	events_init(t_fractal *fractal);
 
 //***** render *****
-void	fractal_render(t_fractal *fractal);
+int	fractal_render(t_fractal *fractal);
 
 //***** hooks *****
 int key_handler(int keysym, t_fractal *fractal);

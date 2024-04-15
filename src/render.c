@@ -13,13 +13,13 @@
 #include "../includes/fractol.h"
 #include "../mlx/mlx.h"
 
-//Put a pixel in my image buffer
-static void my_pixel_put(int x, int y, t_img *img, int colour)
+// Put a pixel in my image buffer
+ static void my_pixel_put(int x, int y, t_img *img, int colour)
 {
     int offset;
 
     offset = (y * img->line_len) + (x * (img->bpp / 8));
-    colour = *(unsigned int *)(img->pixel_ptr + offset);
+     *(unsigned int *)(img->pixel_ptr + offset) = colour;
 }
 
 static void	mandel_or_julia(t_complex *z, t_complex *c, t_fractal *fractal)
@@ -61,7 +61,7 @@ static void    handle_pixel(int x, int y, t_fractal *fractal)
     int			colour;
     
     i = 0;
-
+	colour = 0;
     //pixel co-ordinated scaled to fit mandelbrot
     z.x = (map(x, -2, 2, WIDTH) * fractal->zoom) + fractal->shift_x;
     z.y = (map(y, 2, -2, HEIGHT) * fractal->zoom) + fractal->shift_y;
@@ -82,10 +82,10 @@ static void    handle_pixel(int x, int y, t_fractal *fractal)
 		}
 		i++;
 	}
-	my_pixel_put(x, y, &fractal->img, PSYCHEDELIC_CYAN_BLUE);
+	my_pixel_put(x, y, &fractal->img, WHITE);
 }
 
-void	fractal_render(t_fractal *fractal)
+int	fractal_render(t_fractal *f)
 {
 	int	x;
 	int	y;
@@ -95,10 +95,9 @@ void	fractal_render(t_fractal *fractal)
 	{
 		x = -1;
 		while(++x < WIDTH)
-			handle_pixel(x, y, fractal);
+			handle_pixel(x, y, f);
 	}
-	mlx_put_image_to_window(fractal->mlx_connection,
-							fractal->mlx_window,
-							fractal->img.img_ptr,
-							0, 0);
+	mlx_put_image_to_window(f->mlx_connection, f->mlx_window, \
+	f->img.img_ptr, 0, 0);
+	return (0);
 }

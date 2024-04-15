@@ -28,17 +28,25 @@ int main(int argc, char **argv)
 	t_fractal	fractal;
 
     if ((argc == 2 && !ft_strncmp(argv[1], "mandelbrot", 10))
-    || (argc == 4 && !ft_strncmp(argv[1], "julia", 5)))
+	|| (argc == 4  && !ft_strncmp(argv[1], "julia", 5)))
 	{
 		fractal.name = argv[1];
 		if (!ft_strncmp(fractal.name, "julia", 5))
 		{
-			fractal.julia_x = atod(argv[2]);
-			fractal.julia_y = atod(argv[3]);
+			
+			if (check_error(argv[2], 1) == 1 || check_error(argv[3], 2) == 1)
+			{
+				put_str_fd(ERROR_MESSAGE, STDERR_FILENO);
+				exit(EXIT_FAILURE);
+			}
+			else
+			{
+				fractal.julia_x = atod(argv[2]);
+				fractal.julia_y = atod(argv[3]);
+			}
 		}
-		//Start Prompt
 		fractal_init(&fractal);
-		fractal_render(&fractal);
+		mlx_loop_hook(fractal.mlx_connection, fractal_render, &fractal);
 		mlx_loop(fractal.mlx_connection);//loop listening for event like clicking etc 
 	}
 	else
